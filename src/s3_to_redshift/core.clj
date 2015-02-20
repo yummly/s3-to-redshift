@@ -1,6 +1,5 @@
 (ns s3-to-redshift.core
-  (:require [clojure.tools.cli :refer :all]
-            [taoensso.timbre :as log]
+  (:require [taoensso.timbre :as log]
             [clojure.string :as s]
             [clojure.java.io :as io]
             [clojure.edn :as edn]
@@ -12,7 +11,8 @@
              [s3 :as s3]]
             [cheshire.core :as json]
             [schema.core :as schema :refer [defschema Str Int Bool optional-key]])
-  (:import [java.util UUID]))
+  (:import [java.util UUID])
+  (:gen-class))
 
 ;; create table s3_loaded_file(table_name varchar, url varchar(2048), create_time timestamp default sysdate, primary key (table_name, url));
 (defn- creds->redshift
@@ -20,13 +20,13 @@
   ([]
    (creds->redshift nil))
   ([creds]
-   (let [{:keys [AWSAccessKeyId AWSSecretKey SessionToken]}
+   (let [{:keys [AWSAccessKeyId AWSSecretKey sessionToken]}
          (-> creds aws/get-credentials .getCredentials bean)]
      (cond->
       (format "aws_access_key_id=%s;aws_secret_access_key=%s" AWSAccessKeyId AWSSecretKey)
 
-      SessionToken
-      (str ";token=" SessionToken)))))
+      sessionToken
+      (str ";token=" sessionToken)))))
 
 (defn- ->s3-url [bucket path]
   (str "s3://" bucket "/" (s/replace path #"^/+" "")))
