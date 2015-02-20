@@ -1,0 +1,17 @@
+{:bucket "bucket"
+ :prefix "pre/fix/"
+ :filter-re "^.*/part-[0-9]+$"
+
+ :manifest-bucket "bucket"
+ :manifest-prefix "manifests/"
+
+ :redshift {:host "hostname"
+            :port 5432
+            :user "user"
+            :db "database"
+            :password "password"}
+ :redshift-table "table_name"
+ :redshift-options ["csv" "maxerror 0" "dateformat 'auto'" "timeformat 'auto'" "ignoreheader 1" "trimblanks" "emptyasnull" "blanksasnull" ]
+
+ :seen-table "s3_loaded_file"
+ :max-files-per-manifest 10}
