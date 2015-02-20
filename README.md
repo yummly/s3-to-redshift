@@ -5,7 +5,7 @@ A utility to load files from S3 to Redshift.
 ## Usage
 
 ```sh
-$ lein run -m s3-to-redshift.core/run-with-config -config config.edn
+$ lein run -m s3-to-redshift.core config.edn
 ```
 
 This will find data files in S3 as specified by the config file; check which ones have not yet been loaded; group them in batches and create corresponding manifest files; execute redshift's COPY commands; and mark the files as loaded.

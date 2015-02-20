@@ -182,3 +182,8 @@
                         store-manifests!
                         run-copy!)]
     state))
+
+(defn -main [config & args]
+  (when-not config
+    (throw (IllegalArgumentException. "Please specify a config file")))
+  (run-with-config config))
